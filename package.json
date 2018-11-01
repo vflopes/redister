@@ -1,0 +1,34 @@
+{
+  "name": "redister",
+  "version": "1.0.0",
+  "description": "Redis API and self cluster management aided Docker image",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "redis",
+    "cluster",
+    "api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vflopes/redister.git"
+  },
+  "author": "Victor França Lopes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vflopes/redister/issues"
+  },
+  "homepage": "https://github.com/vflopes/redister#readme",
+  "dependencies": {
+    "@polka/send-type": "^0.5.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.1.0",
+    "polka": "^0.5.1",
+    "redis": "^2.8.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5",
+    "shortid": "^2.2.13"
+  }
+}

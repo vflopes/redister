@@ -1,0 +1,32 @@
+version: "3"
+
+networks:
+  redis_network:
+    driver: overlay
+    external: false
+
+services:
+  redis:
+    image: redis:5
+    command: /bin/bash /redis-command.sh
+    volumes:
+      - ./redis-command.sh:/redis-command.sh
+      - ./redis-heartbeat.sh:/redis-heartbeat.sh
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - redis_network
+    deploy:
+      mode: replicated
+      replicas: 2
+  redis-watcher:
+    image: node:8-alpine
+    command: node index.js
+    ports:
+      - "30080:80"
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+    networks:
+      - redis_network
+    deploy:
+      mode: global
