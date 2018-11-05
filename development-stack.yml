@@ -7,26 +7,32 @@ networks:
 
 services:
   redis:
-    image: redis:5
-    command: /bin/bash /redis-command.sh
+    image: redister:dev
+    command: node index.js
+    working_dir: /opt/app
+    ports:
+      - "30080:80"
     volumes:
-      - ./redis-command.sh:/redis-command.sh
-      - ./redis-heartbeat.sh:/redis-heartbeat.sh
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./:/opt/app
+      - ./assets/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - redis_network
     deploy:
       mode: replicated
-      replicas: 2
-  redis-watcher:
-    image: node:8-alpine
+      replicas: 3
+  redis-witness:
+    image: redister:dev
     command: node index.js
+    working_dir: /opt/app
+    environment:
+      - IS_WITNESS_SERVER=true
     ports:
-      - "30080:80"
-    working_dir: /home/node/app
+      - "30081:80"
     volumes:
-      - ./:/home/node/app
+      - ./:/opt/app
+      - ./assets/witness.conf:/usr/local/etc/redis/redis.conf
     networks:
       - redis_network
     deploy:
-      mode: global
+      mode: replicated
+      replicas: 1
