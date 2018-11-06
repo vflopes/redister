@@ -14,25 +14,10 @@ services:
       - "30080:80"
     volumes:
       - ./:/opt/app
-      - ./assets/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./assets/redis-node.conf:/usr/local/etc/redis/redis-node.conf
+      - ./assets/redis-standalone.conf:/usr/local/etc/redis/redis-standalone.conf
     networks:
       - redis_network
     deploy:
       mode: replicated
       replicas: 3
-  redis-witness:
-    image: redister:dev
-    command: node index.js
-    working_dir: /opt/app
-    environment:
-      - IS_WITNESS_SERVER=true
-    ports:
-      - "30081:80"
-    volumes:
-      - ./:/opt/app
-      - ./assets/witness.conf:/usr/local/etc/redis/redis.conf
-    networks:
-      - redis_network
-    deploy:
-      mode: replicated
-      replicas: 1
