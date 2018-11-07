@@ -1,6 +1,6 @@
 'use strict';
 
-const getPeersInformationFromDiscovery = (discovery) => {
+const getPeersInformationFromDiscovery = ({discovery}) => {
 	const information = [];
 	for (const [hostname, peer] of discovery.peers) {
 		const peerInformation = Object.assign({}, peer);

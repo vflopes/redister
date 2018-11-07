@@ -4,7 +4,7 @@ const send = require('@polka/send-type');
 
 module.exports = (app) => {
 	app
-		.get('/*', (request, response) => send(response, 404, {errors:[getNotFoundError()]}))
+		.get('/*', (request, response) => send(response, 404, {errors:[getNotFoundError()]}));
 
 	return app;
 };
