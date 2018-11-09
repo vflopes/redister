@@ -2,7 +2,7 @@
 
 const getPeersInformationFromDiscovery = ({discovery}) => {
 	const information = [];
-	for (const [hostname, peer] of discovery.peers) {
+	for (const peer of discovery.peers.values()) {
 		const peerInformation = Object.assign({}, peer);
 		delete peerInformation.healthcheck;
 		delete peerInformation.redis;

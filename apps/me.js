@@ -2,10 +2,9 @@
 const os = require('os');
 const dns = require('dns');
 const request = require('request-promise-native');
-const {logger} = require('../lib/logger.js');
 
 const getNetworkInterfaces = () => {
-	
+
 	const networkInterfaces = os.networkInterfaces();
 	const networkInterfacesNames = Object.keys(networkInterfaces);
 	const parsedNetworkInterfaces = [];
@@ -22,10 +21,11 @@ const getNetworkInterfaces = () => {
 
 };
 
-const getInformation = async ({env,cluster,nodeProcess}) => {
+const getInformation = async ({env, cluster, nodeProcess}) => {
 	return {
 		cluster_namespace:env.CLUSTER_NAMESPACE,
 		hostname:os.hostname(),
+		integer_stamp:cluster.integerStamp,
 		system_uptime:os.uptime(),
 		is_leader:cluster.quorum.isLeader,
 		node_number:await cluster.quorum.getNodeNumber(),
@@ -47,7 +47,7 @@ const getInformation = async ({env,cluster,nodeProcess}) => {
 	};
 };
 
-const setClusterSize = async (options = {}, {env,discovery}) => {
+const setClusterSize = async (options = {}, {env, discovery}) => {
 
 	env.CLUSTER_SIZE = parseInt(options.cluster_size || env.CLUSTER_SIZE);
 

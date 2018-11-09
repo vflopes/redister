@@ -1,5 +1,8 @@
 FROM redis:5
 
+COPY assets/redis-node.conf /usr/local/etc/redis/redis-node.conf
+COPY assets/redis-standalone.conf /usr/local/etc/redis/redis-standalone.conf
+
 RUN echo "Acquire::http::User-Agent \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36\";" > /etc/apt/apt.conf.d/30proxy \
 	&& apt-get -y update \
 	&& apt-get -y install gnupg curl xz-utils

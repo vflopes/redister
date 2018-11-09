@@ -1,0 +1,7 @@
+FROM redister:dev
+
+COPY . /opt/app
+
+WORKDIR /opt/app
+
+CMD [ "node", "index.js", "--run-redister" ]

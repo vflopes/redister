@@ -1,4 +1,4 @@
-version: "3"
+version: "3.6"
 
 networks:
   redis_network:
@@ -10,8 +10,10 @@ services:
     image: redister:dev
     command: node index.js --run-redister
     working_dir: /opt/app
+    environment:
+      - LOG_LEVEL=INFO
     ports:
-      - "30080:80"
+      - "44195:80"
     volumes:
       - ./:/opt/app
       - ./assets/redis-node.conf:/usr/local/etc/redis/redis-node.conf
@@ -21,3 +23,13 @@ services:
     deploy:
       mode: replicated
       replicas: 6
+  redis_cli:
+    image: redis:5
+    command: redis-server /usr/local/etc/redis/redis-standalone.conf
+    volumes:
+      - ./assets/redis-standalone.conf:/usr/local/etc/redis/redis-standalone.conf
+    networks:
+      - redis_network
+    deploy:
+      mode: replicated
+      replicas: 1

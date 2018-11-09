@@ -18,5 +18,6 @@ process.env.CLUSTER_SIZE = process.env.CLUSTER_SIZE || 6;
 process.env.CLUSTER_REPLICAS = process.env.CLUSTER_REPLICAS || 1;
 process.env.LOG_FORMAT = process.env.LOG_FORMAT || 'pretty';
 process.env.LOG_OUTPUT = process.env.LOG_OUTPUT || 'stdout';
+process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'trace';
 process.env.STANDALONE_CONFIG_PATH = process.env.STANDALONE_CONFIG_PATH || '/usr/local/etc/redis/redis-standalone.conf';
 process.env.NODE_CONFIG_PATH = process.env.NODE_CONFIG_PATH || '/usr/local/etc/redis/redis-node.conf';
