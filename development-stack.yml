@@ -4,14 +4,13 @@ networks:
   redis_network:
     driver: overlay
     external: false
-
 services:
   redis:
     image: redister:dev
     command: node index.js --run-redister
     working_dir: /opt/app
     environment:
-      - LOG_LEVEL=INFO
+      - LOG_LEVEL=TRACE
     ports:
       - "44195:80"
     volumes:

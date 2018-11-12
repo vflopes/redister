@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --fix ./",
+    "test:change-replica": "node test/change-replica.js",
     "test:scale-up": "node test/scale-up.js",
     "test:slave-down": "node test/slave-down.js",
     "test:master-down": "node test/master-down.js",
-    "test": "npm run lint && npm run test:slave-down && npm run test:master-down"
+    "test": "npm run lint && npm run test:slave-down && npm run test:master-down && npm run test:scale-up && npm run test:change-replica"
   },
   "keywords": [
     "redis",

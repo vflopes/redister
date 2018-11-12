@@ -1,5 +1,6 @@
 'use strict';
 const setupCluster = require('./setup-cluster.js');
+const destroyCluster = require('./destroy-cluster.js');
 const waitClusterReady = require('./wait-cluster-ready.js');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -19,6 +20,7 @@ const scaleUp = async () => {
 	await exec(`docker service scale redis_redis=8`);
 	console.log(`Expecting 4 masters and 4 slaves`);
 	await waitClusterReady(4, 4);
+	await destroyCluster();
 
 };
 

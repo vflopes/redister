@@ -15,6 +15,7 @@ module.exports = (app, {env, cluster, nodeProcess, discovery}) => {
 		.post('/cluster/size', async (request, response) => send(response, HTTP_OK, {data:
 			await setClusterSize({
 				cluster_size:parseInt(request.body.cluster_size || env.CLUSTER_SIZE),
+				cluster_replicas:parseInt(request.body.cluster_replicas || env.CLUSTER_REPLICAS),
 				propagate:!Reflect.has(request.body, 'propagate') ? true : request.body.propagate
 			}, {
 				env,

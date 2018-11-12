@@ -1,5 +1,6 @@
 'use strict';
 const setupCluster = require('./setup-cluster.js');
+const destroyCluster = require('./destroy-cluster.js');
 const waitClusterReady = require('./wait-cluster-ready.js');
 const request = require('request-promise-native');
 const util = require('util');
@@ -26,6 +27,7 @@ const masterDown = async () => {
 	console.log(`The container ${master3.hostname} will be removed`);
 	await exec(`docker rm ${master3.hostname}`);
 	await waitClusterReady();
+	await destroyCluster();
 
 };
 

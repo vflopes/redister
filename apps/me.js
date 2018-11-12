@@ -29,6 +29,8 @@ const getInformation = async ({env, cluster, nodeProcess}) => {
 		system_uptime:os.uptime(),
 		is_leader:cluster.quorum.isLeader,
 		node_number:await cluster.quorum.getNodeNumber(),
+		node_master_number:await cluster.quorum.getNodeNumber('master'),
+		node_slave_number:await cluster.quorum.getNodeNumber('slave'),
 		leader_hostname:await cluster.quorum.getLeaderHostname(),
 		system_timestamp:Date.now(),
 		load_average:os.loadavg(),
@@ -39,6 +41,7 @@ const getInformation = async ({env, cluster, nodeProcess}) => {
 		redis_node_port:parseInt(env.REDIS_NODE_PORT),
 		redis_standalone_port:parseInt(env.REDIS_STANDALONE_PORT),
 		cluster_creation_timestamp:await cluster.getClusterCreationTimestamp(),
+		cluster_replicas:parseInt(env.CLUSTER_REPLICAS),
 		cluster_size:parseInt(env.CLUSTER_SIZE),
 		cluster_information:await cluster.getClusterInformation(),
 		cluster_nodes:await cluster.getClusterNodes(),
@@ -50,6 +53,7 @@ const getInformation = async ({env, cluster, nodeProcess}) => {
 const setClusterSize = async (options = {}, {env, discovery}) => {
 
 	env.CLUSTER_SIZE = parseInt(options.cluster_size || env.CLUSTER_SIZE);
+	env.CLUSTER_REPLICAS = parseInt(options.cluster_replicas || env.CLUSTER_REPLICAS);
 
 	if (options.propagate)
 		await Promise.all(Array.from(discovery.peers.values()).map(async (peer) => {
@@ -62,6 +66,7 @@ const setClusterSize = async (options = {}, {env, discovery}) => {
 				uri:`http://${peer.hostname}:${peer.http_port}/cluster/size`,
 				body:{
 					cluster_size:env.CLUSTER_SIZE,
+					cluster_replicas:env.CLUSTER_REPLICAS,
 					propagate:false
 				},
 				json:true
