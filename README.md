@@ -23,7 +23,8 @@ There's a script named **quorum.js** the algorithm used by Redister is based on 
 * A node must lock a flag on other nodes (standalone Redis) and keep the TTL of this flag up to date
 * The node must have a high random integer stamp greater than 50% of other nodes
 * The node must have the leadership of the majority nodes
-An other minor logics that makes the quorum fast as light speed to choose a leader.
+
+And other minor logics that makes the quorum fast as light speed to choose a leader.
 
 **Redister supports persistence?**
 
