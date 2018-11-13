@@ -13,9 +13,7 @@ const changeReplica = async () => {
 
 	await setupCluster();
 	await waitClusterReady();
-
 	console.log(`The cluster replicas will be changed from 1 to 2`);
-
 	await request({
 		method:'POST',
 		uri:`http://localhost:44195/cluster/size`,
@@ -24,7 +22,6 @@ const changeReplica = async () => {
 		},
 		json:true
 	});
-	
 	console.log('Setting keys');
 	await populateKeys(10);
 	console.log(`The cluster will be scaled to 7 containers`);

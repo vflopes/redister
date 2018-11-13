@@ -4,6 +4,7 @@
   "description": "Redis API and self cluster management aided Docker image",
   "main": "index.js",
   "scripts": {
+    "start":"docker stack deploy -c ./stable-stack.yml redis",
     "lint": "./node_modules/.bin/eslint --fix ./",
     "test:change-replica": "node test/change-replica.js",
     "test:scale-up": "node test/scale-up.js",
