@@ -1,6 +1,8 @@
 FROM redister:dev
 
 COPY . /opt/app
+COPY ./assets/redis-node.conf /usr/local/etc/redis/redis-node.conf
+COPY ./assets/redis-standalone.conf /usr/local/etc/redis/redis-standalone.conf
 
 WORKDIR /opt/app
 

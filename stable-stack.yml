@@ -9,10 +9,12 @@ volumes:
 services:
   redis:
     image: redister:stable
+    tty: true
     volumes:
       - redis_data:/data
     environment:
       - LOG_LEVEL=INFO
+      - TERM=xterm-256color
     ports:
       - "44195:80"
     networks:

@@ -1,4 +1,4 @@
 #!/bin/bash
 npm install
-docker build -f ./Dockerfile -t redister:dev .
-docker build -f ./Dockerfile-stable -t redister:stable .
+docker build --network=host -f ./Dockerfile -t redister:dev .
+docker build --network=host -f ./Dockerfile-stable -t redister:stable .
