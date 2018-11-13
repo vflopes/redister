@@ -4,18 +4,15 @@ networks:
   redis_network:
     driver: overlay
     external: false
-
+volumes:
+  redis_data:
 services:
   redis:
     image: redister:stable
     volumes:
-      - type: bind
-        source: ./data
-        target: /data
+      - redis_data:/data
     environment:
       - LOG_LEVEL=INFO
-    sysctls:
-      - net.core.somaxconn=65536
     ports:
       - "44195:80"
     networks:

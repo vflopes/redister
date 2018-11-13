@@ -2,6 +2,7 @@
 const setupCluster = require('./setup-cluster.js');
 const destroyCluster = require('./destroy-cluster.js');
 const waitClusterReady = require('./wait-cluster-ready.js');
+const {checkKeys,populateKeys} = require('./check-keys.js');
 const request = require('request-promise-native');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -24,18 +25,26 @@ const changeReplica = async () => {
 		json:true
 	});
 	
+	console.log('Setting keys');
+	await populateKeys(10);
 	console.log(`The cluster will be scaled to 7 containers`);
 	await exec(`docker service scale redis_redis=7`);
 	console.log(`Expecting 3 masters and 4 slaves`);
 	await waitClusterReady(3, 4);
+	console.log('Checking keys');
+	await checkKeys(10);
 	console.log(`The cluster will be scaled to 8 containers`);
 	await exec(`docker service scale redis_redis=8`);
 	console.log(`Expecting 3 masters and 5 slaves`);
 	await waitClusterReady(3, 5);
+	console.log('Checking keys');
+	await checkKeys(10);
 	console.log(`The cluster will be scaled to 10 containers`);
 	await exec(`docker service scale redis_redis=10`);
 	console.log(`Expecting 4 masters and 6 slaves`);
 	await waitClusterReady(4, 6);
+	console.log('Checking keys');
+	await checkKeys(10);
 	await destroyCluster();
 
 };

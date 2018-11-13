@@ -1,4 +1,4 @@
-'module.exports';
+'use strict';
 const request = require('request-promise-native');
 const sleep = require('../lib/sleep.js');
 const chalk = require('chalk');
@@ -28,8 +28,8 @@ module.exports = async (expectedMasters = 3, expectedSlaves = 3) => {
 				response.data.length === expectedMasters+expectedSlaves
 				&& response.data.filter((peer) => peer.is_leader).length === 1
 				&& response.data.filter((peer) => peer.redis_node_status === 'ready').length === expectedMasters+expectedSlaves
-				&& response.data.filter((peer) => peer.cluster_nodes && peer.cluster_nodes.filter((clusterNode) => clusterNode.node_state.includes('myself,master')).length === 1).length === expectedMasters
-				&& response.data.filter((peer) => peer.cluster_nodes && peer.cluster_nodes.filter((clusterNode) => clusterNode.node_state.includes('myself,slave')).length === 1).length === expectedSlaves
+				&& response.data.filter((peer) => peer.cluster_nodes && peer.cluster_nodes.filter((clusterNode) => clusterNode.node_state.includes('myself') && clusterNode.node_state.includes('master')).length === 1).length === expectedMasters
+				&& response.data.filter((peer) => peer.cluster_nodes && peer.cluster_nodes.filter((clusterNode) => clusterNode.node_state.includes('myself') && clusterNode.node_state.includes('slave')).length === 1).length === expectedSlaves
 				&& response.data.filter((peer) => peer.cluster_information && peer.cluster_information.cluster_state === 'ok').length === expectedMasters+expectedSlaves
 				&& response.data.filter((peer) => peer.cluster_information && parseInt(peer.cluster_information.cluster_known_nodes) === expectedMasters+expectedSlaves).length === expectedMasters+expectedSlaves
 			)

@@ -35,7 +35,8 @@
     "redis": "^2.8.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
-    "shortid": "^2.2.13"
+    "shortid": "^2.2.13",
+    "waoffle": "^1.1.2"
   },
   "devDependencies": {
     "eslint": "^5.8.0"

@@ -4,16 +4,21 @@ networks:
   redis_network:
     driver: overlay
     external: false
+volumes:
+  redis_data:
 services:
   redis:
     image: redister:dev
     command: node index.js --run-redister
     working_dir: /opt/app
+    tty: true
     environment:
       - LOG_LEVEL=TRACE
+      - TERM=xterm-256color
     ports:
       - "44195:80"
     volumes:
+      - redis_data:/data
       - ./:/opt/app
       - ./assets/redis-node.conf:/usr/local/etc/redis/redis-node.conf
       - ./assets/redis-standalone.conf:/usr/local/etc/redis/redis-standalone.conf

@@ -1,4 +1,4 @@
-'module.exports';
+'use strict';
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const path = require('path');
@@ -22,6 +22,10 @@ module.exports = async () => {
 		if (stdout.toString('utf8').replace(/[\s\n]+/g, '').length === 0)
 			removedNetwork = true;
 	}
+	await exec(`docker system prune -f`);
+	try {
+		await exec(`docker volume rm redis_redis_data`);
+	} catch (error) {}
 	await exec(`docker stack deploy -c ./development-stack.yml redis`, {cwd:baseDirectory});
 	console.log(chalk.greenBright.bold('Stack deployed'));
 
